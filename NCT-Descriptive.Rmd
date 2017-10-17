@@ -1,0 +1,86 @@
+---
+title: "Analyse descriptive des profils de joueurs du Casino de Moncton"
+subtitle: "Travail remis dans le cadre du cours Analytique des affaires (MQT-6021)"
+author: "Nicolas Corneau-Tremblay"
+date: "17 octobre 2017"
+output: pdf_document
+---
+
+## Préambule
+```{r echo=FALSE}
+setwd("/Users/nct/Documents/github")
+```
+
+Ce travaille est effectué en R. Il utilise les librairies suivantes :
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(readxl)
+```
+Les données sont importées ainsi :
+```{r}
+profil <- read_xlsx("Donnees.xlsx", sheet = "Profils", col_names = TRUE, skip = 1)
+```
+
+## Question 1. Est-ce que certaines des variables retenues pour l’analyse doivent être recodées pour être traitées par des algorithmes analytiques? Si oui, faites le recodage dans votre fichier conception.
+```{r}
+summary(profil)
+```
+
+Oui, la variable nominale *Sexe* doit être recodée pour devenir une variable dichotomique. Ceci est fait de la façon suivante :
+```{r}
+profil <- profil %>%
+  mutate(Femme = ifelse(Sexe == "F", 1, 0))
+```
+Nous avons ainsi créé une nouvelle variable qui prend la valeur zéro si l'individu est un homme et un si l'individu est une femme. Également, les variables *NbVisites*, *DepenseJeu* et *DepensesAutres* pourraient être normalisées afin de s'assurer que leur échelle respective n'affecte pas les analyses. Ceci est fait de la façon suivante :
+
+```{r}
+profil <- profil %>%
+  mutate(NbVisites = (NbVisites - mean(NbVisites))/sd(NbVisites),
+         DepenseJeu = (DepenseJeu - mean(DepenseJeu))/sd(DepenseJeu),
+         DepensesAutres = (DepensesAutres - mean(DepensesAutres))/sd(DepensesAutres))
+summary(profil)
+```
+
+Sinon, il ne semble pas y avoir à première vue de valeur aberrante dans les données.
+
+## Question 2. On cherche à segmenter les clients (en fonction des données disponibles) afin d’obtenir entre 3 et 4 groupes de clients relativement homogènes entre eux.
+### a. Est-ce que certaines variables sont non pertinentes pour la segmentation? Justifiez.
+Oui, certaines variables sont non pertinentes pour la segmentation. Premièrement, la variable *Identifiant* est utile afin de structurer les données et de retrouver les individus de façon unique, mais elle n'est (généralement) pas utile lors de la segmentation.
+
+Deuxièmement, la variable *JoueAuxMachines* ne contient aucune variation et prend systématiquement la valeur un. Elle ne peut donc pas être utilisée lors de la segmentation, puisqu'elle ne peut permettre l'identification de certains groupes.
+
+### b. On vous demande de choisir au maximum (2) variables pour segmenter les clients. Indiquez les deux variables les plus pertinentes et justifiez. (1 points)
+
+Selon nous, les deux variables les plus importantes pour segmenter les joueurs sont *DepenseJeu* et *DepensesAutres*. En effet, si le casino est intéressé par ses profits, ces deux variables sont déterminantes dans sa réussite financière, puisqu'elles réprésentent des sources de revenus. Elles permettent donc de répondre à la question "qui dépense combien et comment?"
+
+## Question 3. Réalisez la segmentation sur vos deux variables à l’aide de la méthode des k-moyennes, en utilisant seulement les 20 premières observations :
+### a. à k=4 groupes.
+
+Le code suivant permet d'effectuer la segmentation à l'aide des 20 premières observations. La segmentation est faite pour quatre groupes sur la base des dépenses de jeu et des autres dépenses. Les quatre groupes formés par la segmentation sont présentés ensuite dans une figure.
+```{r}
+# définition d'un seed pour que les résultats soient toujours les mêmes
+set.seed(222)
+# segmentation à l'aide de la fonction kmeans
+cluster <- kmeans(profil[1:20, c("DepenseJeu", "DepensesAutres")], centers = 4)
+# visualisation des résultats
+plot(profil[1:20, c("DepenseJeu", "DepensesAutres")], col = (cluster$cluster),
+     main = "Profils de joueurs selon le niveau de dépenses",
+     xlab = "Dépenses de jeu", ylab = "Autres dépenses", pch = 20)
+mtext("(segmentation à 4 groupes)")
+```
+
+## Question 4. Identifiez brièvement (quelques lignes au maximum) les caractéristiques propres à chaque segment qui permettent de le différencier des autres.
+
+Le premier segment (en vert) semble être des clients qui viennent au casino à des fins récréatives. Ils dépensent relativement peu et forment le groupe le plus nombreux. Le deuxième segment (en bleu) semble lui-aussi être présent dans une perspective récréative puisqu'il dépense de façon marquée, notamment dans les autres dépenses. Il semble toutefois plus fortuné que le premier segment. Le troisième segment (en rouge) parait être des joueurs sérieux ne dépensant qu'en jeu. Le dernier segment (en noir) est possiblement des joueurs professionnels ou de gens très fortunés dépensant des montants importants dans le jeu.
+
+Évidemment, cette analyse est limitée par le nombre restreint d'observations utilisées pour effectuer la segmentation.
+
+## Question 5. Supposons que le décideur vous demande s’il est possible d’obtenir d’autres segmentations à partir des mêmes données, que lui répondriez-vous ? Justifiez votre réponse.
+
+Oui il est possible d'effectuer d'autres segmentations à partir des mêmes données. D'abord, seulement deux variables ont été utilisées pour effectuer les segments précédents. D'autres variables disponibles pourraient être mises à profit afin d'obtenir des profils plus fins et détaillés. Par ailleurs, il est possible de changer le nombre de segments afin de voir si quatre groupes est le nombre le plus approprié pour représenter les données que nous possédons.
+
+
+
+
+
