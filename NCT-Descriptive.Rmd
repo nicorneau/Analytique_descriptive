@@ -15,6 +15,7 @@ Ce travaille est effectué en R. Il utilise les librairies suivantes :
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
+library(ggplot2)
 library(readxl)
 ```
 Les données sont importées ainsi :
@@ -58,21 +59,37 @@ Selon nous, les deux variables les plus importantes pour segmenter les joueurs s
 ### a. à k=4 groupes.
 
 Le code suivant permet d'effectuer la segmentation à l'aide des 20 premières observations. La segmentation est faite pour quatre groupes sur la base des dépenses de jeu et des autres dépenses. Les quatre groupes formés par la segmentation sont présentés ensuite dans une figure.
-```{r}
+```{r, fig.align="center"}
+# sélection des variables et des observations
+top.20 <- profil %>%
+  select(c("DepenseJeu", "DepensesAutres")) %>%
+  head(., 20)
 # définition d'un seed pour que les résultats soient toujours les mêmes
 set.seed(222)
 # segmentation à l'aide de la fonction kmeans
-cluster <- kmeans(profil[1:20, c("DepenseJeu", "DepensesAutres")], centers = 4)
+estim <- kmeans(top.20, centers = 4)
+top.20 <- top.20 %>%
+  mutate(cluster = as.factor(estim$cluster))
 # visualisation des résultats
-plot(profil[1:20, c("DepenseJeu", "DepensesAutres")], col = (cluster$cluster),
-     main = "Profils de joueurs selon le niveau de dépenses",
-     xlab = "Dépenses de jeu", ylab = "Autres dépenses", pch = 20)
-mtext("(segmentation à 4 groupes)")
+ggplot(top.20) +
+  geom_point(aes(DepenseJeu, DepensesAutres, color = cluster)) +
+  scale_color_manual(breaks = c("1", "2", "3", "4"),
+                     values = c("1" = "deepskyblue1", "2" = "orange",
+                              "3" = "firebrick1", "4" = "green3"),
+                     name = "Segments: ") +
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5)) +
+  labs(title = "Profils de joueurs selon le niveau de dépenses",
+       subtitle = "(segmentation à 4 groupes)") +
+  ylab(label = "Autres dépenses") +
+  xlab(label = "Dépenses en jeu") +
+  coord_fixed()
 ```
 
 ## Question 4. Identifiez brièvement (quelques lignes au maximum) les caractéristiques propres à chaque segment qui permettent de le différencier des autres.
 
-Le premier segment (en vert) semble être des clients qui viennent au casino à des fins récréatives. Ils dépensent relativement peu et forment le groupe le plus nombreux. Le deuxième segment (en bleu) semble lui-aussi être présent dans une perspective récréative puisqu'il dépense de façon marquée, notamment dans les autres dépenses. Il semble toutefois plus fortuné que le premier segment. Le troisième segment (en rouge) parait être des joueurs sérieux ne dépensant qu'en jeu. Le dernier segment (en noir) est possiblement des joueurs professionnels ou de gens très fortunés dépensant des montants importants dans le jeu.
+Le premier segment (en rouge) semble être des clients qui viennent au casino à des fins récréatives. Ils dépensent relativement peu et forment le groupe le plus nombreux. Le deuxième segment (en vert) semble lui-aussi être présent dans une perspective récréative puisqu'il dépense de façon marquée, notamment dans les autres dépenses. Il semble toutefois plus fortuné que le premier segment. Le troisième segment (en orange) parait être des joueurs sérieux ne dépensant qu'en jeu. Le dernier segment (en bleu) est possiblement formé de joueurs professionnels ou de gens très fortunés dépensant des montants importants dans le jeu.
 
 Évidemment, cette analyse est limitée par le nombre restreint d'observations utilisées pour effectuer la segmentation.
 
