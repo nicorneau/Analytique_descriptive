@@ -89,13 +89,13 @@ ggplot(top.20) +
 
 ## Question 4. Identifiez brièvement (quelques lignes au maximum) les caractéristiques propres à chaque segment qui permettent de le différencier des autres.
 
-Le premier segment (en rouge) semble être des clients qui viennent au casino à des fins récréatives. Ils dépensent relativement peu et forment le groupe le plus nombreux. Le deuxième segment (en vert) semble lui-aussi être présent dans une perspective récréative puisqu'il dépense de façon marquée, notamment dans les autres dépenses. Il semble toutefois plus fortuné que le premier segment. Le troisième segment (en orange) parait être des joueurs sérieux ne dépensant qu'en jeu. Le dernier segment (en bleu) est possiblement formé de joueurs professionnels ou de gens très fortunés dépensant des montants importants dans le jeu.
+Le premier segment (en bleu) est possiblement formé de joueurs professionnels ou de gens très fortunés dépensant des montants importants dans le jeu. Le deuxième segment (en orange) parait être des joueurs sérieux ne dépensant qu'en jeu. Le troisième segment semble être des clients qui viennent au casino à des fins récréatives. Ils dépensent relativement peu et forment le groupe le plus nombreux. Le quatrième et dernier segment (en vert) semble lui-aussi être présent dans une perspective récréative puisqu'il dépense de façon marquée, notamment dans les autres dépenses. Il semble toutefois plus fortuné que le troisième segment. 
 
 Évidemment, cette analyse est limitée par le nombre restreint d'observations utilisées pour effectuer la segmentation.
 
 ## Question 5. Supposons que le décideur vous demande s’il est possible d’obtenir d’autres segmentations à partir des mêmes données, que lui répondriez-vous ? Justifiez votre réponse.
 
-Oui il est possible d'effectuer d'autres segmentations à partir des mêmes données. D'abord, seulement deux variables ont été utilisées pour effectuer les segments précédents. D'autres variables disponibles pourraient être mises à profit afin d'obtenir des profils plus fins et détaillés. Par ailleurs, il est possible de changer le nombre de segments afin de voir si quatre groupes est le nombre le plus approprié pour représenter les données que nous possédons.
+Oui il est possible d'effectuer d'autres segmentations à partir des mêmes données. D'abord, seulement deux variables ont été utilisées pour effectuer les segments précédents. D'autres variables disponibles pourraient être mises à profit afin d'obtenir des profils plus fins et détaillés. Par ailleurs, il est possible de changer le nombre de segments afin de voir si quatre groupes est le nombre le plus approprié pour représenter les données que nous possédons. Ce processus pourrait être effectué à l'aide de la méthode de validation croisée.
 
 
 
