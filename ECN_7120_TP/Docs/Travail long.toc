@@ -1,0 +1,17 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}Introduction}{4}
+\contentsline {section}{\numberline {2}Revue de la litt\IeC {\'e}rature}{4}
+\contentsline {section}{\numberline {3}M\IeC {\'e}thodologie}{6}
+\contentsline {subsection}{\numberline {3.1}Probit}{6}
+\contentsline {subsection}{\numberline {3.2}Panel}{9}
+\contentsline {subsection}{\numberline {3.3}Tests de sp\IeC {\'e}cification}{11}
+\contentsline {section}{\numberline {4}Donn\IeC {\'e}es}{11}
+\contentsline {section}{\numberline {5}R\IeC {\'e}sultats}{13}
+\contentsline {subsection}{\numberline {5.1}Probl\IeC {\`e}me de coeur}{13}
+\contentsline {subsection}{\numberline {5.2}Probl\IeC {\`e}me de pression sanguine}{14}
+\contentsline {section}{\numberline {6}Limites}{15}
+\contentsline {section}{\numberline {7}Conclusion}{16}
+\contentsline {section}{\numberline {8}Bibliographie}{17}
+\contentsline {section}{\numberline {9}Annexe 1}{18}
+\contentsline {subsection}{\numberline {9.1}Coeur}{18}
+\contentsline {subsection}{\numberline {9.2}Pression}{20}
