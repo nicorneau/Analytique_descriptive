@@ -2,6 +2,7 @@ README
 ================
 Nicolas Corneau-Tremblay
 
-Ce repo présente un devoir effectué pour le cours Analytique des affaires (MQT-6021) dans le cadre de mon microprogramme en Analytique des affaires à l'Université Laval. Ce devoir porte sur l'analyse descriptive et la segmentation.
+Ce repo présente différents devoirs effectué au courant de ma formation universitaire. 
+Ceux-ci portent essentiellement sur des analyses statistiques et de la programmation.
 
 Enjoy!
